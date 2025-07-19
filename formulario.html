@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação - Sementeira Real</title>
+    <meta name="description" content="Formulário de briefing estruturado para solicitações de marketing">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': {
+                            50: '#f0f9f0',
+                            100: '#dcf2dc',
+                            200: '#bce4bc',
+                            300: '#8fd18f',
+                            400: '#5bb55b',
+                            500: '#2D5016',
+                            600: '#3A6B1C',
+                            700: '#4A7C2A',
+                            800: '#3d5f22',
+                            900: '#2d4a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200" style="background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #e5e7eb;">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="index.html" class="text-2xl font-bold" style="color: var(--bangladesh-green);">
+                        Sementeira Real
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="index.html#recursos" class="nav-link">Recursos</a>
+                        <a href="#" class="nav-link active">Solicitar</a>
+                    </div>
+                </div>
+                
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2">
+                    <li>
+                        <a href="index.html" class="breadcrumb-link">
+                            <i class="fas fa-home"></i>
+                        </a>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-chevron-right mx-2 separator"></i>
+                        <span class="font-medium current">Formulário de Solicitação</span>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Spinner de envio -->
+        <div id="spinner-envio" class="hidden flex justify-center items-center mb-6" aria-live="polite">
+            <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-forest-green-500"></div>
+            <span class="ml-4 text-forest-green-700 font-semibold">Enviando solicitação...</span>
+        </div>
+        <!-- Form Section -->
+        <div id="form-error-summary" class="hidden bg-red-50 border border-red-300 text-red-800 rounded-lg p-4 mb-6" role="alert" aria-live="assertive"></div>
+        <div id="form-section">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">
+                    Formulário de Solicitação
+                </h1>
+                <p class="text-xl">
+                    Preencha o briefing estruturado para solicitar materiais de marketing
+                </p>
+            </div>
+
+            <form id="solicitacao-form" class="space-y-8">
+                <!-- Dados do Solicitante -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-user mr-3"></i>
+                        Dados do Solicitante
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="nome" class="form-label">
+                                Nome Completo <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="nome" name="nome" class="form-input" required>
+                            <div class="form-error" id="nome-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                            <div class="form-error" id="email-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="departamento" class="form-label">
+                                Departamento <span class="text-red-500">*</span>
+                            </label>
+                            <select id="departamento" name="departamento" class="form-select" required>
+                                <option value="">Selecione o departamento</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Vendas">Vendas</option>
+                                <option value="RH">Recursos Humanos</option>
+                                <option value="Financeiro">Financeiro</option>
+                                <option value="Operações">Operações</option>
+                                <option value="TI">Tecnologia da Informação</option>
+                                <option value="Jurídico">Jurídico</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                            <div class="form-error" id="departamento-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="centroCusto" class="form-label">
+                                Centro de Custo <span class="text-red-500">*</span>
+                                <i class="fas fa-question-circle text-gray-400 ml-1 cursor-pointer" tabindex="0" data-tooltip="Código usado para identificar o setor responsável pela solicitação. Exemplo: CC-001"></i>
+                            </label>
+                            <input type="text" id="centroCusto" name="centroCusto" class="form-input" placeholder="Ex: CC-001" required>
+                            <div class="form-error" id="centroCusto-error"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalhes da Solicitação -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-clipboard-list mr-3"></i>
+                        Detalhes da Solicitação
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Tipo de Material <span class="text-red-500">*</span>
+                            </label>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Arte para campanha" required>
+                                    <span class="radio-text">Arte para campanha</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Vídeo" required>
+                                    <span class="radio-text">Vídeo</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Marca" required>
+                                    <span class="radio-text">Marca</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Banner" required>
+                                    <span class="radio-text">Banner</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Outdoor" required>
+                                    <span class="radio-text">Outdoor</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Folder" required>
+                                    <span class="radio-text">Folder</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Panfleto" required>
+                                    <span class="radio-text">Panfleto</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Campanha completa" required>
+                                    <span class="radio-text">Campanha completa</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Abertura de loja" required>
+                                    <span class="radio-text">Abertura de loja</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="tipo" value="Outro" required>
+                                    <span class="radio-text">Outro</span>
+                                </label>
+                            </div>
+                            <div class="form-error" id="tipo-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Prioridade <span class="text-red-500">*</span>
+                            </label>
+                            <div class="grid md:grid-cols-4 gap-4">
+                                <label class="radio-option priority-urgent">
+                                    <input type="radio" name="prioridade" value="Urgente (1 dia útil)" required>
+                                    <span class="radio-text">Urgente (1 dia)</span>
+                                </label>
+                                <label class="radio-option priority-high">
+                                    <input type="radio" name="prioridade" value="Alta (3 dias)" required>
+                                    <span class="radio-text">Alta (3 dias)</span>
+                                </label>
+                                <label class="radio-option priority-normal">
+                                    <input type="radio" name="prioridade" value="Normal (7 dias úteis)" required>
+                                    <span class="radio-text">Normal (7 dias)</span>
+                                </label>
+                                <label class="radio-option priority-low">
+                                    <input type="radio" name="prioridade" value="Baixa (15 dias)" required>
+                                    <span class="radio-text">Baixa (15 dias)</span>
+                                </label>
+                            </div>
+                            <div class="form-error" id="prioridade-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="titulo" class="form-label">
+                                Título/Nome do Material <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="titulo" name="titulo" class="form-input" placeholder="Ex: Banner Promoção Black Friday" required>
+                            <div class="form-error" id="titulo-error"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descrição e Especificações -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-edit mr-3"></i>
+                        Descrição e Especificações
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="form-group">
+                            <label for="descricao" class="form-label">
+                                Descrição Detalhada <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="descricao" name="descricao" rows="4" class="form-textarea" 
+                                placeholder="Descreva o objetivo, público-alvo, mensagem principal e contexto da solicitação..." required></textarea>
+                            <div class="form-error" id="descricao-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="especificacoes" class="form-label">
+                                Especificações Técnicas <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="especificacoes" name="especificacoes" rows="4" class="form-textarea" 
+                                placeholder="Tamanhos, formatos, cores específicas, sugestão de texto para a arte, etc..." required></textarea>
+                            <div class="form-error" id="especificacoes-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="referencias" class="form-label">
+                                Links de Referência
+                            </label>
+                            <textarea id="referencias" name="referencias" rows="3" class="form-textarea" 
+                                placeholder="Cole aqui os links de referência (URLs) que possam ajudar na criação do material..."></textarea>
+                            <div class="form-error" id="referencias-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="observacoes" class="form-label">
+                                Observações Adicionais
+                            </label>
+                            <textarea id="observacoes" name="observacoes" rows="3" class="form-textarea" 
+                                placeholder="Informações adicionais, restrições, preferências ou observações importantes..."></textarea>
+                            <div class="form-error" id="observacoes-error"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-green-900 dark:text-green-100 mb-2">
+                                Como funciona o envio:
+                            </h3>
+                            <ol class="text-green-800 dark:text-green-200 text-sm list-decimal ml-4">
+                                <li>Preencha todos os campos obrigatórios do formulário.</li>
+                                <li>Ao clicar em <b>Enviar Solicitação</b>, seu programa de email será aberto automaticamente com todos os dados preenchidos.</li>
+                                <li>Basta clicar em <b>Enviar</b> no seu programa de email para concluir a solicitação.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-center space-x-4">
+                    <button type="submit" class="btn-primary text-lg px-12 py-4">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Enviar Solicitação
+                    </button>
+                    <button type="button" id="btn-limpar" class="btn-secondary text-lg px-8 py-4">
+                        <i class="fas fa-eraser mr-2"></i>
+                        Limpar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Section (Hidden by default) -->
+        <div id="success-section" class="hidden text-center">
+            <div class="card max-w-2xl mx-auto">
+                <div class="text-green-500 text-6xl mb-6">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">
+                    Solicitação pronta para envio!
+                </h2>
+                <p class="text-xl mb-8">
+                    Seu programa de email foi aberto. Confira os dados e clique em <b>Enviar</b> para concluir a solicitação.
+                </p>
+                <a href="index.html" class="btn-secondary">
+                    <i class="fas fa-home mr-2"></i>
+                    Voltar ao Início
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-12 mt-20" style="background-color: var(--rich-black);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-forest-green-400 mb-4">
+                    Sementeira Real
+                </h3>
+                <p class="text-gray-400">
+                    Sistema de solicitações para o setor de marketing
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/email-form.js"></script>
+</body>
+</html> 
